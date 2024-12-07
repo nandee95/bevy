@@ -25,6 +25,7 @@ use core::ops::Deref;
 /// [`Children`]: super::children::Children
 /// [`BuildChildren::with_children`]: crate::child_builder::BuildChildren::with_children
 #[derive(Debug, Eq, PartialEq, VisitEntities, VisitEntitiesMut)]
+#[cfg_attr(feature = "serialize", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "reflect", derive(bevy_reflect::Reflect))]
 #[cfg_attr(
     feature = "reflect",
@@ -37,6 +38,10 @@ use core::ops::Deref;
         Debug,
         FromWorld
     )
+)]
+#[cfg_attr(
+    all(feature = "serialize", feature = "reflect"),
+    reflect(Serialize, Deserialize)
 )]
 pub struct Parent(pub(crate) Entity);
 
